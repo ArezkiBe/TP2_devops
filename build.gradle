@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.0.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
+	id 'org.sonarqube' version '5.1.0.4882'
 }
 
 group = 'com.example'
@@ -25,4 +27,41 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+// Configuration JaCoCo pour la couverture de code
+jacoco {
+	toolVersion = "0.8.12"
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+		csv.required = false
+	}
+}
+
+// Vérification de couverture désactivée (pas de seuil obligatoire)
+// Le rapport est généré et envoyé à SonarCloud pour suivi
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.00
+			}
+		}
+	}
+}
+
+// Configuration SonarQube
+sonar {
+	properties {
+		property "sonar.projectKey", "ArezkiBe_TP2_devops"
+		property "sonar.organization", "arezkibe"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+	}
 }
