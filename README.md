@@ -2,6 +2,14 @@
 
 Application de gestion de location de voitures composée de deux microservices Spring Boot, un frontend Nginx, et une pipeline CI/CD GitHub Actions.
 
+# Team Members
+
+- Arezki BEGGAR
+- Ilyas HADJADJ
+
+# Git link :
+- https://github.com/ArezkiBe/TP2_devops
+
 ## Technologies
 
 - Java 17 / Spring Boot 4.0.5
