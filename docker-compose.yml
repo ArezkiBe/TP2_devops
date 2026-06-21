@@ -1,0 +1,14 @@
+services:
+  car-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  customer-service:
+    build:
+      context: .
+      dockerfile: customer-service/Dockerfile
+    ports:
+      - "8081:8081"

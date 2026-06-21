@@ -32,13 +32,13 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Run Tests
+      - name: Run Car Service Tests
         run: |
           chmod +x gradlew
-          ./gradlew test
+          ./gradlew test jacocoTestReport
 
-      - name: Generate JaCoCo Report
-        run: ./gradlew jacocoTestReport
+      - name: Run Customer Service Tests
+        run: ./gradlew :customer-service:test :customer-service:jacocoTestReport
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -49,15 +49,24 @@ jobs:
           args: >
             -Dsonar.projectKey=ArezkiBe_TP2_devops
             -Dsonar.organization=arezkibe
-            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
-            -Dsonar.java.binaries=build/classes
+            -Dsonar.sources=src/main/java,customer-service/src/main/java
+            -Dsonar.tests=src/test/java,customer-service/src/test/java
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml,customer-service/build/reports/jacoco/test/jacocoTestReport.xml
+            -Dsonar.java.binaries=build/classes,customer-service/build/classes
 
-      - name: Upload Coverage Reports
+      - name: Upload Car Service Coverage Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: jacoco-reports
+          name: jacoco-car-service
           path: build/reports/jacoco/test/html/
+
+      - name: Upload Customer Service Coverage Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jacoco-customer-service
+          path: customer-service/build/reports/jacoco/test/html/
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
@@ -65,7 +74,9 @@ jobs:
         with:
           files: |
             build/test-results/**/*.xml
+            customer-service/build/test-results/**/*.xml
 
       - name: Build Docker images
         run: |
-          docker build -t hello:latest -f Dockerfile .
+          docker build -t car-service:latest -f Dockerfile .
+          docker build -t customer-service:latest -f customer-service/Dockerfile .

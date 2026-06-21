@@ -31,7 +31,6 @@ tasks.named('test') {
 	finalizedBy jacocoTestReport
 }
 
-// Configuration JaCoCo pour la couverture de code
 jacoco {
 	toolVersion = "0.8.12"
 }
@@ -44,18 +43,3 @@ jacocoTestReport {
 		csv.required = false
 	}
 }
-
-// Vérification de couverture désactivée (pas de seuil obligatoire)
-// Le rapport est généré et envoyé à SonarCloud pour suivi
-jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			limit {
-				minimum = 0.00
-			}
-		}
-	}
-}
-
-// Configuration SonarCloud se fait via l'action GitHub
-// Les rapports JaCoCo seront automatiquement détectés
