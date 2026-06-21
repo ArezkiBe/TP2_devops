@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Car Rental Service</h1>
+    <p>Fleet &amp; Customer Management</p>
+</header>
+
+<nav>
+    <button class="tab-btn active" onclick="showTab('cars', this)">Cars</button>
+    <button class="tab-btn" onclick="showTab('customers', this)">Customers</button>
+</nav>
+
+<main>
+
+    <!-- Cars -->
+    <section id="cars-section" class="tab-section active">
+        <div class="section-header">
+            <h2>Fleet Management</h2>
+        </div>
+
+        <div id="cars-error" class="error-message hidden"></div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Plate</th>
+                        <th>Brand</th>
+                        <th>Price / day</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="cars-tbody">
+                    <tr><td colspan="5" class="loading">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>Add a Car</h3>
+            <form id="add-car-form" onsubmit="addCar(event)">
+                <input type="text" id="car-plate" placeholder="Plate (e.g. AB-123-CD)" required>
+                <input type="text" id="car-brand" placeholder="Brand" required>
+                <input type="number" id="car-price" placeholder="Price / day (€)" min="0" step="0.01" required>
+                <button type="submit" class="btn btn-success">Add Car</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Customers -->
+    <section id="customers-section" class="tab-section">
+        <div class="section-header">
+            <h2>Customer Management</h2>
+        </div>
+
+        <div id="customers-error" class="error-message hidden"></div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="customers-tbody">
+                    <tr><td colspan="5" class="loading">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>Add a Customer</h3>
+            <form id="add-customer-form" onsubmit="addCustomer(event)">
+                <input type="text" id="customer-firstname" placeholder="First Name" required>
+                <input type="text" id="customer-lastname" placeholder="Last Name" required>
+                <input type="email" id="customer-email" placeholder="Email" required>
+                <button type="submit" class="btn btn-success">Add Customer</button>
+            </form>
+        </div>
+    </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

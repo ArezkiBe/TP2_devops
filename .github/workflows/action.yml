@@ -80,3 +80,4 @@ jobs:
         run: |
           docker build -t car-service:latest -f Dockerfile .
           docker build -t customer-service:latest -f customer-service/Dockerfile .
+          docker build -t frontend:latest -f frontend/Dockerfile ./frontend

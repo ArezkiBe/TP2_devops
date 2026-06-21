@@ -12,3 +12,13 @@ services:
       dockerfile: customer-service/Dockerfile
     ports:
       - "8081:8081"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - car-service
+      - customer-service
